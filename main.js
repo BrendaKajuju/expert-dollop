@@ -6,12 +6,20 @@ const app = express();
 const PORT = 8001;
 
 
-// Add your database 
+// Initialize your database 
 const db_url = 'mongodb://localhost:27017/ussd';
 mongoose.connect(db_url);
 const db = mongoose.connection;
+db.on('error', (err) => {
+    console.log(err)
+})
 
-// add your control flow
+db.once('open', () => {
+    console.log ("database is up and running")
+})
+
+// add your control flow with body parser
+
 
 
 app.listen(PORT, () => {
