@@ -19,6 +19,11 @@ db.once('open', () => {
 })
 
 // add your control flow with body parser
+app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({extended:true}))
+
+// add methods
+app.get()
 
 
 
