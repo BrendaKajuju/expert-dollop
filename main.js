@@ -1,7 +1,12 @@
 const express = require ('express');
-const bodyparser = require ('body-parser');
+const bodyParser = require ('body-parser');
 const mongoose = require ('mongoose');
+const config = require('config');
+const Africastalking = require('africastalking');
 
+
+const AT = Africastalking(config.get('AT')).USSD;
+console.log(AT);
 const app = express();
 const PORT = 8001;
 
@@ -19,12 +24,29 @@ db.once('open', () => {
 })
 
 // add your control flow with body parser
-app.use(bodyparser.json())
-app.use(bodyparser.urlencoded({extended:true}))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:true}))
 
 // add methods
-app.get()
+app.get('/', (request, response) => {
+    response.send('Success')
+})
 
+app.post('/', (request, response) => {;
+    const {sessionId, phoneNumber, text} = request.body;
+    let reply;
+
+    if (text === '')
+    {
+        reply = 'CON Hello, what services do you want? '
+    }
+
+
+    setTimeout( () => {
+        response.send(reply);
+        response.end()
+    }, 2000)
+})
 
 
 app.listen(PORT, () => {
